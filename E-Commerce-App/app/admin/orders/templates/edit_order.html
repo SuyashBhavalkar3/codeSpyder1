@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}{{ "Edit Order" if order else "Add Order" }}{% endblock %}
+
+{% block content %}
+<h2 class="page-title">{{ "Edit" if order else "Add" }} Order</h2>
+
+<div class="form-container">
+    <form method="POST">
+        <!-- Customer Select -->
+        <label for="customer_id">Customer</label>
+        <select id="customer_id" name="customer_id" required>
+            {% for customer in customers %}
+                <option value="{{ customer.id }}"
+                    {% if order and order.customer_id == customer.id %}selected{% endif %}>
+                    {{ customer.name }} ({{ customer.email }})
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- Product Select -->
+        <label for="product_id">Product</label>
+        <select id="product_id" name="product_id" required>
+            {% for product in products %}
+                <option value="{{ product.id }}"
+                    {% if order and order.product_id == product.id %}selected{% endif %}>
+                    {{ product.name }} (Price: {{ product.price }}, Stock: {{ product.stock }})
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- Quantity -->
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" name="quantity"
+               value="{{ order.quantity if order else 1 }}" min="1" required>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-submit">
+            {{ "Update" if order else "Add" }}
+        </button>
+    </form>
+</div>
+
+<style>
+        /* Page Title */
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #222;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    /* Form Container */
+    .form-container {
+        max-width: 450px;
+        margin: 20px auto;
+        padding: 25px 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-container:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    /* Labels */
+    .form-container label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        margin-top: 15px;
+        color: #444;
+    }
+
+    /* Inputs */
+    .form-container input,
+    .form-container select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: border 0.3s ease, box-shadow 0.3s ease;
+        background-color: #fdfdfd;
+    }
+
+    .form-container input:focus,
+    .form-container select:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 6px rgba(0,123,255,0.25);
+    }
+
+    /* Submit Button */
+    .btn-submit {
+        display: inline-block;
+        width: 100%;
+        margin-top: 25px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(135deg, #0056b3, #004099);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Optional: Subtle Animation for Inputs */
+    .form-container input,
+    .form-container select,
+    .btn-submit {
+        transition: all 0.25s ease-in-out;
+    }
+
+</style>
+{% endblock %}

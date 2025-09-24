@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Manage Products{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Products</h2>
+
+<!-- Add Product Button -->
+<a href="{{ url_for('products.add_product') }}" class="btn">+ Add Product</a>
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>₹{{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>
+                <a href="{{ url_for('products.edit_product', id=product.id) }}" class="btn btn-edit">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    /* Page Title */
+    .page-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        padding: 8px 14px;
+        margin: 5px 0;
+        font-size: 14px;
+        text-decoration: none;
+        border-radius: 6px;
+        background: #007bff;
+        color: white;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .btn:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+    .btn-edit {
+        background: #007bff;
+    }
+    .btn-edit:hover {
+        background: #0056b3;
+    }
+
+    /* Table Styling */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .styled-table thead tr {
+        background-color: #007bff;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .styled-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .styled-table tbody tr:hover {
+        background-color: #f1f1f1;
+        transition: background 0.3s ease;
+    }
+</style>
+{% endblock %}
